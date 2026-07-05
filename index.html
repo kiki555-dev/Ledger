@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ledger — калькулятор ROI и NPV</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="page">
+
+    <header class="masthead">
+      <span class="masthead__eyebrow">Финансовый инструмент</span>
+      <h1 class="masthead__title">Ledger</h1>
+      <p class="masthead__subtitle">Считает ROI, NPV и срок окупаемости инвестиции по месячному денежному потоку</p>
+    </header>
+
+    <main class="ledger">
+
+      <!-- ЛЕВАЯ КОЛОНКА: ввод данных -->
+      <section class="panel panel--input" aria-label="Параметры инвестиции">
+        <h2 class="panel__title">Параметры</h2>
+
+        <form id="calc-form" class="form">
+          <div class="field">
+            <label for="investment">Начальные инвестиции, ₽</label>
+            <input type="number" id="investment" name="investment" min="0" step="1000" value="500000" required>
+          </div>
+
+          <div class="field">
+            <label for="revenue">Выручка в месяц, ₽</label>
+            <input type="number" id="revenue" name="revenue" min="0" step="1000" value="120000" required>
+          </div>
+
+          <div class="field">
+            <label for="costs">Расходы в месяц, ₽</label>
+            <input type="number" id="costs" name="costs" min="0" step="1000" value="70000" required>
+          </div>
+
+          <div class="field">
+            <label for="period">Горизонт расчёта, мес.</label>
+            <input type="number" id="period" name="period" min="1" max="120" step="1" value="24" required>
+          </div>
+
+          <div class="field">
+            <label for="rate">Ставка дисконтирования, % годовых</label>
+            <input type="number" id="rate" name="rate" min="0" max="100" step="0.5" value="15" required>
+          </div>
+
+          <button type="submit" class="btn">Рассчитать</button>
+          <p class="form__error" id="form-error" role="alert"></p>
+        </form>
+      </section>
+
+      <!-- ПРАВАЯ КОЛОНКА: результаты -->
+      <section class="panel panel--result" aria-label="Результаты расчёта">
+
+        <div class="hero-stat">
+          <span class="hero-stat__label">NPV — чистая приведённая стоимость</span>
+          <span class="hero-stat__value" id="npv-value">0 ₽</span>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat">
+            <span class="stat__label">ROI</span>
+            <span class="stat__value" id="roi-value">0%</span>
+          </div>
+          <div class="stat">
+            <span class="stat__label">Срок окупаемости</span>
+            <span class="stat__value" id="payback-value">—</span>
+          </div>
+          <div class="stat">
+            <span class="stat__label">Итоговая прибыль</span>
+            <span class="stat__value" id="profit-value">0 ₽</span>
+          </div>
+        </div>
+
+        <div class="chart-block">
+          <div class="chart-block__head">
+            <span>Накопленный денежный поток</span>
+            <span class="chart-block__legend">
+              <span class="dot dot--neg"></span> убыток
+              <span class="dot dot--pos"></span> прибыль
+            </span>
+          </div>
+          <canvas id="cashflow-chart" width="600" height="220"></canvas>
+        </div>
+
+      </section>
+
+    </main>
+
+    <footer class="footer">
+      Учебный проект · расчёты приведены для демонстрации, не являются инвестиционной рекомендацией
+    </footer>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
